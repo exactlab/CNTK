@@ -4,7 +4,7 @@
 //
 
 #include "stdafx.h"
-#include <boost/algorithm/string/predicate.hpp>
+//#include <boost/algorithm/string/predicate.hpp>
 
 #include "CNTKLibrary.h"
 #include "fileutil.h"
@@ -368,6 +368,11 @@ namespace CNTK
         Trainer()->SaveCheckpoint(m_checkpoint.m_fileName, externalState);
     }
 
+    inline bool starts_with(const std::wstring& input, const std::wstring& pattern)
+    {
+        return input.find(pattern) == 0;
+    }
+
     // Restores from a m_checkPointFileName file.
     // If the file path exists - simply restores from the corresponding file.
     // If the file path does not exist - looks into directory where the file is
@@ -408,7 +413,7 @@ namespace CNTK
 
             for (auto f : files)
             {
-                if (!boost::starts_with(f, fileName))
+                if (!starts_with(f, fileName))
                 {
                     continue;
                 }
